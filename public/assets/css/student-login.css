@@ -1,0 +1,83 @@
+        body {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Nunito', sans-serif;
+        }
+        .login-container {
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.12);
+            border-radius: 14px;
+            overflow: hidden;
+            max-width: 400px;
+            width: 100%;
+            margin: auto;
+            background: #fff;
+            animation: fadeInUp 0.6s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .login-header {
+            background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+            color: white;
+            padding: 2rem 1.5rem 1.5rem;
+            text-align: center;
+        }
+        .login-header img {
+            max-height: 70px;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        }
+        .login-form {
+            padding: 2rem 1.5rem;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 0.9rem;
+        }
+        .input-group-text {
+            background: #f1f5f9;
+            border-right: 0;
+        }
+        .form-control {
+            border-left: 0;
+        }
+        .form-control:focus {
+            border-color: #4e73df;
+            box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.15);
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+            border: none;
+            color: white;
+            padding: 0.75rem;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .btn-login:hover {
+            background: linear-gradient(135deg, #3a56c5 0%, #1a3cb4 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(78, 115, 223, 0.2);
+        }
+        .forgot-link {
+            color: #4e73df;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .forgot-link:hover {
+            color: #224abe;
+            text-decoration: underline;
+        }
+        .login-footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #718096;
+            padding: 1rem;
+            border-top: 1px solid #edf2f7;
+            background: #f9fafb;
+        }
