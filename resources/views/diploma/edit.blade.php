@@ -1,3 +1,4 @@
+@include('layoutss.dheader')
 @extends('layouts.app')
 
 @section('content')

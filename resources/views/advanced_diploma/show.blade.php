@@ -1,3 +1,4 @@
+@include('layoutss.aheader')
 @extends('layouts.app')
 
 @section('content')

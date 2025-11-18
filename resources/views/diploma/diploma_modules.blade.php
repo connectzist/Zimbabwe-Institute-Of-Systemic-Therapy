@@ -1,3 +1,4 @@
+@include('layoutss.dheader')
 @extends('layoutss.app') 
 @section('content')
 <div class="container-fluid">

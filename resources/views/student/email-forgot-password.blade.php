@@ -73,5 +73,15 @@
 
     <script src="{{ asset('assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/hideError.js') }}"></script>
+
+        
+    <!-- Auto-redirect after success -->
+    @if(session('success'))
+    <script>
+        setTimeout(function () {
+            window.location.href = "{{ route('student.login') }}";
+        }, 3000); // 3 seconds delay
+    </script>
+    @endif
 </body>
 </html>
