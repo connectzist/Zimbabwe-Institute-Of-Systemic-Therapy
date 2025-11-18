@@ -26,9 +26,10 @@
       {{ $message }}
     </p>
 
-    <a href="{{ route('admin_login') }}" class="btn btn-custom mt-3">
-      Return to Login
+    <a href="{{ route('return_to_login') }}" class="btn btn-custom mt-3">
+        Return to Login
     </a>
+
 
     <p class="tracking-note">
       Kindly note that this information is being sent to

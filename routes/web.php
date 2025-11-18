@@ -30,6 +30,8 @@ use App\Http\Controllers\Modules\AdvancedDiplomaModulesController;
 // Login 
 Route::middleware(['guest:web'])->get('/', [LogInController::class, 'AdminLogin'])->name('admin_login');
 Route::post('/admin/admin_login', [LogInController::class, 'loginUser'])->name('loginUser');
+Route::get('/return-to-login', [LogInController::class, 'returnToLogin'])->name('return_to_login');
+
 
 // Logout 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');

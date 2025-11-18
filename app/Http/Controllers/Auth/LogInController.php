@@ -45,4 +45,18 @@ class LogInController extends Controller
     return back()->with('fail', 'Incorrect email or password.');
     }
 
+    public function returnToLogin()
+{
+    // Log out the current user
+    Auth::logout();
+
+    // Invalidate the session
+    request()->session()->invalidate();
+
+    // Regenerate CSRF token for security
+    request()->session()->regenerateToken();
+
+    // Redirect to the login page
+    return redirect()->route('admin_login');
+}
 }
