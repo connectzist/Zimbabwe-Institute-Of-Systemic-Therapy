@@ -35,7 +35,7 @@ Route::post('/admin/admin_login', [LogInController::class, 'loginUser'])->name('
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 // Users 
-Route::middleware('auth.custom:web')->prefix('users')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->prefix('users')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
@@ -45,7 +45,7 @@ Route::middleware('auth.custom:web')->prefix('users')->group(function () {
     });
 
 // Dashboard 
-Route::prefix('dashboard')->middleware('auth.custom:web')->group(function () {
+Route::prefix('dashboard')->middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('/dashboard', [DashBoardController::class, 'dashboard'])->name('dashboard.dashboard');
     Route::get('/users', [UserController::class, 'index'])->name('dashboard.users');
     Route::get('/courses', [DashBoardController::class, 'courses'])->name('dashboard.courses');
@@ -58,15 +58,21 @@ Route::prefix('dashboard')->middleware('auth.custom:web')->group(function () {
 });
 
 // Departmental Dashboards
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,AdvancedDiplomaAdmin'])->group(function () {
     Route::get('/advanced-diploma-dashboard', [DashBoardController::class, 'showAdvDiplodashboard'])->name('dashboard.advdiplodashboard');
+});
+
+Route::middleware(['auth.custom:web,CertificateAdmin'])->group(function () {
     Route::get('/certificate-dashboard', [DashBoardController::class, 'showCertdashboard'])->name('dashboard.certdashboard');
+});
+
+Route::middleware(['auth.custom:web,DiplomaAdmin'])->group(function () {
     Route::get('/diploma-dashboard', [DashBoardController::class, 'showDiplodashboard'])->name('dashboard.diplodashboard');
 });
 
 
 // Students
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
     Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
     Route::post('/students', [StudentController::class, 'store'])->name('students.store');
@@ -77,7 +83,7 @@ Route::middleware('auth.custom:web')->group(function () {
 });
 
 // Courses 
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
     Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
     Route::post('/courses', [CourseController::class, 'store'])->name('courses.store');
@@ -88,7 +94,7 @@ Route::middleware('auth.custom:web')->group(function () {
 });
 
 // Fees Management 
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::prefix('finance')->group(function () {
     Route::get('/students/fees', [FeesController::class, 'index'])->name('fees.index');
     Route::get('/students/fees/create', [FeesController::class, 'create'])->name('fees.create');
@@ -103,7 +109,7 @@ Route::middleware('auth.custom:web')->group(function () {
 });
 
 // Diploma modules
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('/diploma', [DiplomaModulesController::class, 'index'])->name('diploma.index');
     Route::get('/diploma/create', [DiplomaModulesController::class, 'create'])->name('diploma.create');
     Route::post('/diploma', [DiplomaModulesController::class, 'store'])->name('diploma.store');
@@ -114,7 +120,7 @@ Route::middleware('auth.custom:web')->group(function () {
 });
 
 // Certificate modules
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('/certificate', [CertificateModuleController::class, 'index'])->name('certificate.index');
     Route::get('/certificate/create', [CertificateModuleController::class, 'create'])->name('certificate.create');
     Route::post('/certificate', [CertificateModuleController::class, 'store'])->name('certificate.store');
@@ -125,7 +131,7 @@ Route::middleware('auth.custom:web')->group(function () {
 });
 
 //Advanced Diploma Modules
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('/advanced_diploma', [AdvancedDiplomaModulesController::class, 'index'])->name('advanced_diploma.index');
     Route::get('/advanced_diploma/create', [AdvancedDiplomaModulesController::class, 'create'])->name('advanced_diploma.create');
     Route::post('/advanced_diploma', [AdvancedDiplomaModulesController::class, 'store'])->name('advanced_diploma.store');
@@ -136,7 +142,7 @@ Route::middleware('auth.custom:web')->group(function () {
 });
 
 // CertificateAdmin 
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,CertificateAdmin'])->group(function () {
     Route::get('/certificate_students', [CertificateAdminController::class, 'certificateStudents'])->name('certificate.certificate_students');
     Route::get('/certificate_modules', [CertificateAdminController::class, 'certificateModules'])->name('certificate.certificate_modules');
     Route::get('/cert_coursework', [CertificateAdminController::class, 'coursework'])->name('certificate.cert_coursework');
@@ -154,7 +160,7 @@ Route::middleware('auth.custom:web')->group(function () {
 });
 
 // DiplomaAdmin 
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,DiplomaAdmin'])->group(function () {
     Route::get('/diploma_students', [DiplomaAdminController::class, 'diplomaStudents'])->name('diploma.diploma_students');
     Route::get('/diploma_modules', [DiplomaAdminController::class, 'modules'])->name('diploma.diploma_modules');
     Route::get('/diploma_coursework', [DiplomaAdminController::class, 'coursework'])->name('diploma.diploma_coursework');
@@ -169,14 +175,15 @@ Route::middleware('auth.custom:web')->group(function () {
     Route::get('/diploma_results/finalrecord/{id}/edit', [DiplomaAdminController::class, 'diplomafinaledit'])->name('diploma_results.diplomafinaledit');
     Route::get('/diploma_final/record/{id}', [DiplomaAdminController::class, 'FinalModuleshow'])->name('diploma_results.FinalModuleshow');
     Route::put('/diploma_results/{id}', [DiplomaAdminController::class, 'update'])->name('diploma_results.update');
+    Route::put('/diploma_results/finalmodule/{id}', [DiplomaAdminController::class, 'finalmoduleupdate'])->name('diploma_results.finalmoduleupdate');
     Route::get('/diploma_results/student/{student_id}', [DiplomaAdminController::class, 'diploshow'])->name('diploma_results.diploshow');
     Route::delete('/diploma_results/student/{student_id}', [DiplomaAdminController::class, 'destroy'])->name('diploma_results.destroy');
     Route::delete('/diploma_results/finalmodule/record/{student_id}', [DiplomaAdminController::class, 'finalmoduledestroy'])->name('diploma_results.finalmoduledestroy');
     Route::delete('/diploma_final/record/{id}', [DiplomaAdminController::class, 'diploma_resultfinaldelete'])->name('diploma_results.diplomafinaldelete');
 });
 
-// Advanced Diploma Admin 
-Route::middleware('auth.custom:web')->group(function () {
+// Advanced Diploma Admin  
+Route::middleware(['auth.custom:web,AdvancedDiplomaAdmin'])->group(function () {
     Route::get('/advanced_diploma_results/{student_id}/{module_id}', [AdvancedDiplomaAdminController::class, 'show'])->name('advanced_diploma_results.show');
     Route::get('/advanced-results/{student_id}/{module_id}', [AdvancedDiplomaAdminController::class, 'advancedshow'])->name('advanced_diploma_results.advancedshow');
     Route::get('/advanced_students', [AdvancedDiplomaAdminController::class, 'advanceddiplomaStudents'])->name('advanced_diploma.advanced_students');
@@ -209,7 +216,7 @@ Route::middleware('auth.custom:web')->group(function () {
 });
 
 // Super Admin
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('/students_results/certificate', [SuperAdminController::class, 'certresults'])->name('students_results.certificate.cert_results');
     Route::get('/students_results/{student_id}', [SuperAdminController::class, 'certificate_view'])->name('students_results.certificate_view');
     Route::get('/students_results/diploma/diploma_results', [SuperAdminController::class, 'diplomaresults'])->name('students_results.diploma.diploma_results');
@@ -255,7 +262,7 @@ Route::middleware('student.auth')->group(function () {
 });
 
 // Registrations
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('manual-registration', [RegistrationController::class, 'manualRegistration'])->name('registration.create_reg');
     Route::post('manual-reg-store', [RegistrationController::class, 'store'])->name('registrations.store');
     Route::get('manual-reg-edit/{id}', [RegistrationController::class, 'edit'])->name('registrations.edit');
@@ -270,7 +277,7 @@ Route::view('/student/emailerror', 'student.emailerror')->name('student.emailerr
 
 
 // Publishing System 
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('/upload', [SuperAdminController::class, 'diploma_publish'])->name('diploma_publish');
     Route::get('c_upload', [SuperAdminController::class, 'certificate_publish'])->name('certificate_publish');
     Route::get('ad_upload', [SuperAdminController::class, 'Advanced_Diploma_publish'])->name('Advanced_Diploma_publish');
@@ -286,7 +293,7 @@ Route::middleware('auth.custom:web')->group(function () {
 
 
 // Transcripts 
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('/transcripts', [TranscriptController::class, 'index'])->name('transcripts.index');
     Route::get('/transcripts/search', [TranscriptController::class, 'search'])->name('transcripts.search');
     Route::get('/transcripts/pdf/{studentId}', [TranscriptController::class, 'generateTranscriptPDF'])->name('transcripts.pdf');
@@ -294,7 +301,7 @@ Route::middleware('auth.custom:web')->group(function () {
 
 
 // Timetable 
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('/upload/timetable', [TimetableController::class, 'create'])->name('upload.timetable');
     Route::post('/upload-timetable', [TimetableController::class, 'store'])->name('store.timetable');
     Route::get('/timetable/view', [TimetableController::class, 'index'])->name('timetables.view');
@@ -305,7 +312,7 @@ Route::middleware('auth.custom:web')->group(function () {
 
 
 //Notices
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('/notices/view', [NoticeController::class, 'index'])->name('notices.view');
     Route::get('/notices/create', [NoticeController::class, 'create'])->name('notices.create');
     Route::post('/notices', [NoticeController::class, 'store'])->name('store.notice');
@@ -315,7 +322,7 @@ Route::middleware('auth.custom:web')->group(function () {
 });
 
 //Modules / Semesters
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('/modules/view', [ModuleController::class, 'index'])->name('modules.view_modules');
     Route::get('/modules/create', [ModuleController::class, 'create'])->name('modules.create_module');
     Route::post('/modules', [ModuleController::class, 'store'])->name('modules.store');
@@ -325,7 +332,7 @@ Route::middleware('auth.custom:web')->group(function () {
     Route::get('/modules-by-course/{course_id}', [ModuleController::class, 'getModulesByCourse']);
 });
 
-Route::middleware('auth.custom:web')->group(function () {
+Route::middleware(['auth.custom:web,SuperAdmin'])->group(function () {
     Route::get('/library', [LibraryController::class, 'viewLibrary'])->name('zist.library');
     Route::get('/library/books', [LibraryController::class, 'viewBooks'])->name('library.all.books');
     Route::get('/library/books/new', [LibraryController::class, 'AddNewBook'])->name('library.newBook');

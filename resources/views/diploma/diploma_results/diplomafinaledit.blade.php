@@ -7,7 +7,7 @@
             <h4 class="mb-0">Edit Diploma Result</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('diploma_results.update', $diplomaResult->id) }}" method="POST">
+            <form action="{{ route('diploma_results.finalmoduleupdate', $diplomaResult->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 

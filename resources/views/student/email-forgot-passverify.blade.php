@@ -24,7 +24,7 @@
         <div class="forgot-header">
             <img src="{{ asset('images/Connect.logo.jpg') }}" alt="CONNECT Logo" class="mb-3 logo-img">
             <h2>Forgot Password?</h2>
-            <p class="text-muted mb-3">Enter your School email to receive a verification code.</p>
+            <p class="text-muted mb-3">Enter your CONNECT ZIST email to receive a verification code.</p>
         </div>
 
         <!-- Success Message -->
@@ -48,13 +48,13 @@
                 </div>
             </div>
 
-            <div class="d-grid">
+            <div class="d-grid justify-content-center">
                 <button type="submit" class="btn btn-primary">Send Verification Code</button>
             </div>
 
         <div class="text-center mt-4">
             <p class="text-muted mb-2">Remember your password?</p>
-            <a href="{{ route('student.login') }}" class="btn btn-outline-primary btn-sm">Back to Login</a>
+            <a href="{{ route('student.login') }}" >Back to Login</a>
         </div>
         
         </form>

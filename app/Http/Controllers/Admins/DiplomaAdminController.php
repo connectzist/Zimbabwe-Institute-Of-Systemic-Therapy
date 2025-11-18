@@ -201,6 +201,26 @@ class DiplomaAdminController extends Controller
         return redirect()->route('diploma.diploma_coursework')->with('success', 'Diploma result updated successfully.');
     }
 
+     public function finalmoduleupdate(Request $request, $id)
+    {
+        $diplomaResult = DiplomaFinalModule::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'module_id' => 'required|exists:modules,id',
+            'exam_mark' => 'required|numeric|min:0|max:100',
+            'practical_mark' => 'required|numeric|min:0|max:100',
+            'research_mark' => 'required|numeric|min:0|max:100',
+        ]);
+
+        $diplomaResult->module_id = $validatedData['module_id'];
+        $diplomaResult->exam_mark = $validatedData['exam_mark'];
+        $diplomaResult->practical_mark = $validatedData['practical_mark'];
+        $diplomaResult->research_mark = $validatedData['research_mark'];
+
+        $diplomaResult->save();
+
+        return redirect()->route('diploma.diploma_finalmodule')->with('success', 'Diploma result updated successfully.');
+    }
 
     public function destroy($student_id)
     {
